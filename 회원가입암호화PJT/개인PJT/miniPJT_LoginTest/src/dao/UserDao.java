@@ -7,7 +7,7 @@ import dto.User;
 
 public interface UserDao {
 	// 회원가입
-	public void registUser(User user);
+	public boolean registUser(User user);
 	
 	// 로그인 
 	public User loginUser(String id, String password);

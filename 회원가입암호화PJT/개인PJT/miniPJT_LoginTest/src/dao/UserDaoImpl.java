@@ -24,10 +24,10 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	/**
-	 * 회원가입을 위해 받은 id, password 등의 데이터를 DB에 저장하기
+	 * 회원가입을 위해 받은 id, password 등의 데이터를 DB에 저장하기 실행 결과 잘 됐으면 true, 잘 안됐으면 false 반환
 	 */
 	@Override
-	public void registUser(User user) {
+	public boolean registUser(User user) {
 		// 사용할 sql문 (users 테이블에 id, password 데이터 삽입하고 싶음)
 		String sql = "INSERT INTO `users` (id, password) VALUES (?,?);";
 		// DB 연결 객체
@@ -46,18 +46,25 @@ public class UserDaoImpl implements UserDao {
 			pstmt.setString(1, user.getId());
 			pstmt.setString(2, user.getPassword());
 
+			System.out.println(user.toString());
+			System.out.println("result : " + result);
+
 			// sql 실행 결과 영향받은 행 수가 0보다 큰 경우 정상 실행
 			result = pstmt.executeUpdate() > 0 ? true : false;
+			System.out.println("result : " + result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			// 자원 해제해주기
 			util.close(conn, pstmt);
 		}
+
+		return result;
 	}
 
 	/**
-	 * 로그인 정보(id, password)를
+	 * 로그인 정보(id, password)를 받아와서 DB에서 일치하는 사용자 있는지 조회 일치하는 사용자가 있다면 해당 사용자의 id와
+	 * password를 담은 user 객체가 반환되고, 일치하는 사용자가 없다면 null이 반환된다.
 	 */
 	@Override
 	public User loginUser(String id, String password) {

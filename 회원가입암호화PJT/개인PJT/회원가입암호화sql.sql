@@ -1,18 +1,19 @@
-CREATE DATABASE login;
+CREATE DATABASE IF NOT EXISTS login;
 
 USE login;
+DROP TABLE `users`;
 
-CREATE TABLE `users`(
+CREATE TABLE IF NOT EXISTS `users`(
 	`userNo` INT PRIMARY KEY AUTO_INCREMENT,
 	`id` VARCHAR(40) NOT NULL UNIQUE,
-    `password` VARCHAR(40) NOT NULL
+    `password` VARCHAR(100) NOT NULL
 );
 
 DESC `users`;
 
-INSERT INTO `users` (id, password)
-VALUES ("yudaeng", 1234);
+DELETE FROM `users`;
+
+-- INSERT INTO `users` (id, password)
+-- VALUES ("yudaeng", "e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb");
 
 SELECT * FROM `users`;
-
-SELECT * FROM `users` WHERE id = "yudaeng" AND password = 1234;
